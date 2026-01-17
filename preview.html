@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Dashboard - Pastel Pink Theme Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9f1239',
+                            900: '#831843',
+                        },
+                        pastel: {
+                            pink: '#ffd6e8',
+                            rose: '#ffe4ec',
+                            blush: '#fff0f5',
+                            lavender: '#f5e6ff',
+                            peach: '#ffe5d9',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .modal-overlay {
+            display: none;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-8 bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose min-h-screen">
+        <h1 class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+            ตัวอย่างหน้าจอ Sales Dashboard (Pastel Pink Theme)
+        </h1>
+        
+        <!-- Login Page Preview -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">1. หน้า Login</h2>
+            <div class="bg-white p-4 rounded-lg shadow-lg border-2 border-pastel-pink">
+                <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose px-4 relative overflow-hidden">
+                    <!-- Decorative illustrations -->
+                    <div class="absolute top-10 left-10 w-32 h-32 opacity-30">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="50" cy="50" r="20" fill="#ffd6e8" opacity="0.6" />
+                            <circle cx="70" cy="50" r="25" fill="#ffe4ec" opacity="0.6" />
+                            <g transform="translate(100, 100)">
+                                <path d="M0,-30 L9,-9 L30,-9 L12,3 L18,24 L0,12 L-18,24 L-12,3 L-30,-9 L-9,-9 Z" fill="#f472b6" opacity="0.8" />
+                            </g>
+                        </svg>
+                    </div>
+                    
+                    <div class="max-w-md w-full relative z-10">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border-2 border-pastel-pink">
+                            <div class="text-center mb-8">
+                                <!-- Cute illustration -->
+                                <div class="flex justify-center mb-4">
+                                    <div class="w-24 h-24">
+                                        <svg viewBox="0 0 200 200">
+                                            <circle cx="50" cy="50" r="20" fill="#ffd6e8" opacity="0.6" />
+                                            <circle cx="70" cy="50" r="25" fill="#ffe4ec" opacity="0.6" />
+                                            <g transform="translate(100, 100)">
+                                                <path d="M0,-30 L9,-9 L30,-9 L12,3 L18,24 L0,12 L-18,24 L-12,3 L-30,-9 L-9,-9 Z" fill="#f472b6" opacity="0.8" />
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full mb-4 shadow-lg">
+                                    <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                    </svg>
+                                </div>
+                                <h1 class="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent mb-2">
+                                    เข้าสู่ระบบ
+                                </h1>
+                                <p class="text-gray-600">กรุณาเข้าสู่ระบบเพื่อเข้าถึง Dashboard</p>
+                            </div>
+
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">อีเมล</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <input type="email" class="block w-full pl-10 pr-3 py-3 border-2 border-pastel-pink rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-colors bg-white/50" placeholder="your@email.com" value="user@example.com">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">รหัสผ่าน</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                            </svg>
+                                        </div>
+                                        <input type="password" class="block w-full pl-10 pr-3 py-3 border-2 border-pastel-pink rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-colors bg-white/50" placeholder="••••••••" value="••••••••">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full bg-gradient-to-r from-primary-500 to-primary-400 text-white py-3 px-4 rounded-xl font-medium hover:from-primary-600 hover:to-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105">
+                                    เข้าสู่ระบบ
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page Preview -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">2. หน้า Dashboard พร้อมฟีเจอร์ทั้งหมด</h2>
+            <div class="bg-white p-4 rounded-lg shadow-lg border-2 border-pastel-pink">
+                <div class="min-h-screen bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose">
+                    <!-- Header -->
+                    <header class="bg-white/80 backdrop-blur-sm shadow-lg border-b-2 border-pastel-pink">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="flex justify-between items-center py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12">
+                                        <svg viewBox="0 0 200 200">
+                                            <rect x="30" y="120" width="20" height="50" fill="#f9a8d4" rx="4" />
+                                            <rect x="60" y="100" width="20" height="70" fill="#f472b6" rx="4" />
+                                            <rect x="90" y="80" width="20" height="90" fill="#ec4899" rx="4" />
+                                            <circle cx="100" cy="40" r="25" fill="#ffe4ec" />
+                                            <circle cx="92" cy="35" r="4" fill="#831843" />
+                                            <circle cx="108" cy="35" r="4" fill="#831843" />
+                                        </svg>
+                                    </div>
+                                    <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">Sales Dashboard</h1>
+                                </div>
+                                <button class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-primary-600 hover:bg-pastel-pink rounded-xl transition-all border-2 border-transparent hover:border-primary-300">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l-4-4m0 0l-4 4m4-4v12"></path>
+                                    </svg>
+                                    <span>ออกจากระบบ</span>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <!-- Summary Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 border-2 border-pastel-pink hover:shadow-xl transition-all transform hover:scale-105">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600 mb-1">ยอดขายรวม</p>
+                                        <p class="text-2xl font-bold text-gray-900">฿125,500.00</p>
+                                    </div>
+                                    <div class="p-3 bg-gradient-to-br from-primary-200 to-primary-300 rounded-xl shadow-md">
+                                        <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 border-2 border-pastel-rose hover:shadow-xl transition-all transform hover:scale-105">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600 mb-1">จำนวนสินค้าทั้งหมด</p>
+                                        <p class="text-2xl font-bold text-gray-900">1,250</p>
+                                    </div>
+                                    <div class="p-3 bg-gradient-to-br from-pink-200 to-rose-300 rounded-xl shadow-md">
+                                        <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 border-2 border-pastel-lavender hover:shadow-xl transition-all transform hover:scale-105">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-600 mb-1">จำนวนรายการขาย</p>
+                                        <p class="text-2xl font-bold text-gray-900">85</p>
+                                    </div>
+                                    <div class="p-3 bg-gradient-to-br from-purple-200 to-pink-300 rounded-xl shadow-md">
+                                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sales by Product Table -->
+                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-pastel-pink overflow-hidden">
+                            <div class="px-6 py-4 border-b-2 border-pastel-pink bg-gradient-to-r from-pastel-pink/30 to-pastel-rose/30">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10">
+                                            <svg viewBox="0 0 200 200">
+                                                <rect x="30" y="120" width="20" height="50" fill="#f9a8d4" rx="4" />
+                                                <rect x="60" y="100" width="20" height="70" fill="#f472b6" rx="4" />
+                                                <rect x="90" y="80" width="20" height="90" fill="#ec4899" rx="4" />
+                                            </svg>
+                                        </div>
+                                        <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                        </svg>
+                                        <h2 class="text-xl font-semibold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">ยอดขายแยกตามสินค้า</h2>
+                                    </div>
+                                    
+                                    <!-- Filters and Sort -->
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <!-- Date Filter -->
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <input
+                                                type="date"
+                                                value="2024-01-15"
+                                                class="px-3 py-2 border-2 border-pastel-pink rounded-xl text-sm focus:ring-2 focus:ring-primary-400 focus:border-primary-400 bg-white/80"
+                                                style="color-scheme: light;"
+                                            />
+                                            <button class="p-1 text-gray-500 hover:text-gray-700" title="ล้างการกรอง">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        <!-- Sort Buttons -->
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm text-gray-600">เรียงตาม:</span>
+                                            <button class="px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-1 bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-lg">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                                </svg>
+                                                สูงสุด
+                                            </button>
+                                            <button class="px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-1 bg-pastel-pink text-gray-700 hover:bg-pastel-rose border-2 border-pastel-pink">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                </svg>
+                                                ต่ำสุด
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gradient-to-r from-pastel-pink/50 to-pastel-rose/50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">สินค้า</th>
+                                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">จำนวนที่ขาย</th>
+                                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">ยอดขายรวม</th>
+                                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">จำนวนรายการ</th>
+                                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">ยอดขายเฉลี่ยต่อรายการ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr class="hover:bg-pastel-pink/50 transition-all cursor-pointer border-l-4 border-primary-400" onclick="openModal('สินค้า B')" style="background-color: #ffd6e850;">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-gray-900">สินค้า B</div>
+                                                <div class="text-xs text-gray-500">คลิกเพื่อดูรายละเอียด</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">320</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-gray-900">฿64,000.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">25</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">฿2,560.00</td>
+                                        </tr>
+                                        <tr class="hover:bg-pastel-pink/50 transition-all cursor-pointer" onclick="openModal('สินค้า A')">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-gray-900">สินค้า A</div>
+                                                <div class="text-xs text-gray-500">คลิกเพื่อดูรายละเอียด</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">450</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-gray-900">฿45,000.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">30</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">฿1,500.00</td>
+                                        </tr>
+                                        <tr class="hover:bg-pastel-pink/50 transition-all cursor-pointer" onclick="openModal('สินค้า C')">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-gray-900">สินค้า C</div>
+                                                <div class="text-xs text-gray-500">คลิกเพื่อดูรายละเอียด</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">280</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-gray-900">฿42,000.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">20</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">฿2,100.00</td>
+                                        </tr>
+                                        <tr class="hover:bg-pastel-pink/50 transition-all cursor-pointer" onclick="openModal('สินค้า D')">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-gray-900">สินค้า D</div>
+                                                <div class="text-xs text-gray-500">คลิกเพื่อดูรายละเอียด</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">200</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-gray-900">฿14,500.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">10</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">฿1,450.00</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="bg-gradient-to-r from-pastel-pink/50 to-pastel-rose/50">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">รวมทั้งหมด</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900">1,250</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900">฿125,500.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900">85</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900">฿1,476.47</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Detail Modal -->
+        <div id="productModal" class="modal-overlay fixed inset-0 z-50 overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                <!-- Background overlay -->
+                <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="closeModal()"></div>
+
+                <!-- Modal panel -->
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-primary-500 to-primary-400 px-6 py-4 flex justify-between items-center shadow-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10">
+                                <svg viewBox="0 0 200 200">
+                                    <rect x="30" y="120" width="20" height="50" fill="#f9a8d4" rx="4" />
+                                    <rect x="60" y="100" width="20" height="70" fill="#f472b6" rx="4" />
+                                    <rect x="90" y="80" width="20" height="90" fill="#ec4899" rx="4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">รายละเอียดยอดขาย</h3>
+                                <p class="text-sm text-pink-100 mt-1" id="modalProductName">สินค้า B</p>
+                            </div>
+                        </div>
+                        <button onclick="closeModal()" class="text-white hover:text-pink-100 transition-colors p-2 hover:bg-white/20 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="bg-gradient-to-br from-pastel-pink/30 via-white to-pastel-rose/30 px-6 py-4">
+                        <!-- Summary -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <div class="bg-gradient-to-br from-pastel-pink to-pastel-rose rounded-xl p-4 border-2 border-pastel-pink shadow-md">
+                                <div class="flex items-center gap-2 text-gray-600 mb-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                    </svg>
+                                    <span class="text-sm">จำนวนรวม</span>
+                                </div>
+                                <p class="text-xl font-bold text-gray-900">320</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-pastel-rose to-pastel-pink rounded-xl p-4 border-2 border-pastel-rose shadow-md">
+                                <div class="flex items-center gap-2 text-gray-600 mb-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span class="text-sm">ยอดขายรวม</span>
+                                </div>
+                                <p class="text-xl font-bold text-gray-900">฿64,000.00</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-pastel-lavender to-pastel-pink rounded-xl p-4 border-2 border-pastel-lavender shadow-md">
+                                <div class="flex items-center gap-2 text-gray-600 mb-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-sm">จำนวนรายการ</span>
+                                </div>
+                                <p class="text-xl font-bold text-gray-900">25</p>
+                            </div>
+                        </div>
+
+                        <!-- Sales List -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gradient-to-r from-pastel-pink/50 to-pastel-rose/50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">วันที่</th>
+                                        <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">จำนวน</th>
+                                        <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">ยอดขาย</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-pastel-pink/30 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-900">15 มกราคม 2567</td>
+                                        <td class="px-4 py-3 text-sm text-right text-gray-900">15</td>
+                                        <td class="px-4 py-3 text-sm text-right font-semibold text-gray-900">฿3,000.00</td>
+                                    </tr>
+                                    <tr class="hover:bg-pastel-pink/30 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-900">14 มกราคม 2567</td>
+                                        <td class="px-4 py-3 text-sm text-right text-gray-900">10</td>
+                                        <td class="px-4 py-3 text-sm text-right font-semibold text-gray-900">฿2,000.00</td>
+                                    </tr>
+                                    <tr class="hover:bg-pastel-pink/30 transition-colors">
+                                        <td class="px-4 py-3 text-sm text-gray-900">13 มกราคม 2567</td>
+                                        <td class="px-4 py-3 text-sm text-right text-gray-900">20</td>
+                                        <td class="px-4 py-3 text-sm text-right font-semibold text-gray-900">฿4,000.00</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot class="bg-gradient-to-r from-pastel-pink/50 to-pastel-rose/50">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-bold text-gray-900">รวม</td>
+                                        <td class="px-4 py-3 text-sm text-right font-bold text-gray-900">320</td>
+                                        <td class="px-4 py-3 text-sm text-right font-bold text-gray-900">฿64,000.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="bg-gradient-to-r from-pastel-pink/30 to-pastel-rose/30 px-6 py-4 flex justify-end border-t-2 border-pastel-pink">
+                        <button onclick="closeModal()" class="px-4 py-2 bg-gradient-to-r from-primary-400 to-primary-300 text-white rounded-xl hover:from-primary-500 hover:to-primary-400 transition-all shadow-md hover:shadow-lg transform hover:scale-105">
+                            ปิด
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 border-2 border-pastel-pink">
+            <h3 class="text-lg font-semibold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent mb-4">
+                ✨ ฟีเจอร์ทั้งหมด
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gradient-to-br from-pastel-pink to-pastel-rose rounded-xl p-4 border-2 border-pastel-pink">
+                    <h4 class="font-semibold text-gray-900 mb-2">🎨 ธีม Pastel Pink</h4>
+                    <p class="text-sm text-gray-700">UI สวยงามด้วยสี pastel pink, rose, blush, lavender</p>
+                </div>
+                <div class="bg-gradient-to-br from-pastel-rose to-pastel-pink rounded-xl p-4 border-2 border-pastel-rose">
+                    <h4 class="font-semibold text-gray-900 mb-2">🎭 รูปการ์ตูนตกแต่ง</h4>
+                    <p class="text-sm text-gray-700">มีรูปการ์ตูน SVG ตกแต่งในทุกหน้า</p>
+                </div>
+                <div class="bg-gradient-to-br from-pastel-lavender to-pastel-pink rounded-xl p-4 border-2 border-pastel-lavender">
+                    <h4 class="font-semibold text-gray-900 mb-2">📅 กรองตามวันที่</h4>
+                    <p class="text-sm text-gray-700">เลือกวันที่เพื่อดูยอดขายเฉพาะวันนั้น</p>
+                </div>
+                <div class="bg-gradient-to-br from-pastel-pink to-pastel-lavender rounded-xl p-4 border-2 border-pastel-pink">
+                    <h4 class="font-semibold text-gray-900 mb-2">📊 เรียงลำดับ</h4>
+                    <p class="text-sm text-gray-700">เรียงสินค้าตามยอดขายสูงสุด/ต่ำสุด</p>
+                </div>
+                <div class="bg-gradient-to-br from-pastel-rose to-pastel-lavender rounded-xl p-4 border-2 border-pastel-rose">
+                    <h4 class="font-semibold text-gray-900 mb-2">👆 คลิกดูรายละเอียด</h4>
+                    <p class="text-sm text-gray-700">คลิกที่แถวสินค้าเพื่อดูรายละเอียดยอดขาย</p>
+                </div>
+                <div class="bg-gradient-to-br from-pastel-lavender to-pastel-rose rounded-xl p-4 border-2 border-pastel-lavender">
+                    <h4 class="font-semibold text-gray-900 mb-2">💫 Hover Effects</h4>
+                    <p class="text-sm text-gray-700">มี hover effects และ transitions ที่นุ่มนวล</p>
+                </div>
+            </div>
+            <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p class="text-sm text-yellow-800">
+                    <strong>💡 ทดสอบ:</strong> คลิกที่แถวสินค้าใดๆ ในตารางเพื่อเปิด Modal แสดงรายละเอียดยอดขาย
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(productName) {
+            document.getElementById('modalProductName').textContent = productName;
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
