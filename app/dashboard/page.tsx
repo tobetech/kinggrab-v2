@@ -19,7 +19,7 @@ export default function DashboardPage() {
   const [totalTransactions, setTotalTransactions] = useState(0)
   const [dateFilter, setDateFilter] = useState<string>('')
   const [sortOrder, setSortOrder] = useState<SortOrder>('none')
-  const [selectedProduct, setSelectedProduct] = useState<{ id: string; name: string } | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<{ name: string } | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const router = useRouter()
 
@@ -51,18 +51,7 @@ export default function DashboardPage() {
       // สร้าง query
       let query = supabase
         .from('sales')
-        .select(`
-          id,
-          product_id,
-          quantity,
-          total_amount,
-          sale_date,
-          products (
-            id,
-            name,
-            price
-          )
-        `)
+        .select('id, M_Name, amount, quantity, sale_date, created_at')
 
       // กรองตามวันที่ถ้ามี
       if (dateFilter) {
@@ -74,8 +63,8 @@ export default function DashboardPage() {
       if (salesError) throw salesError
 
       // คำนวณยอดรวม
-      const total = sales?.reduce((sum, sale) => sum + (sale.total_amount || 0), 0) || 0
-      const totalQty = sales?.reduce((sum, sale) => sum + (sale.quantity || 0), 0) || 0
+      const total = sales?.reduce((sum, sale) => sum + (Number(sale.amount) || 0), 0) || 0
+      const totalQty = sales?.reduce((sum, sale) => sum + (sale.quantity ?? 1), 0) || 0
       setTotalSales(total)
       setTotalQuantity(totalQty)
       setTotalTransactions(sales?.length || 0)
@@ -84,22 +73,22 @@ export default function DashboardPage() {
       const grouped: { [key: string]: SalesByProduct } = {}
 
       sales?.forEach((sale: any) => {
-        const productId = sale.product_id
-        const product = sale.products
+        const productName = sale.M_Name || 'ไม่ระบุชื่อ'
+        const qty = sale.quantity ?? 1
+        const amt = Number(sale.amount) || 0
 
-        if (!grouped[productId]) {
-          grouped[productId] = {
-            product_id: productId,
-            product_name: product?.name || 'ไม่ระบุชื่อ',
+        if (!grouped[productName]) {
+          grouped[productName] = {
+            product_name: productName,
             total_quantity: 0,
             total_amount: 0,
             sale_count: 0,
           }
         }
 
-        grouped[productId].total_quantity += sale.quantity || 0
-        grouped[productId].total_amount += sale.total_amount || 0
-        grouped[productId].sale_count += 1
+        grouped[productName].total_quantity += qty
+        grouped[productName].total_amount += amt
+        grouped[productName].sale_count += 1
       })
 
       setSalesData(Object.values(grouped))
@@ -123,8 +112,8 @@ export default function DashboardPage() {
     setFilteredSalesData(filtered)
   }
 
-  const handleProductClick = (productId: string, productName: string) => {
-    setSelectedProduct({ id: productId, name: productName })
+  const handleProductClick = (productName: string) => {
+    setSelectedProduct({ name: productName })
     setIsModalOpen(true)
   }
 
@@ -328,9 +317,9 @@ export default function DashboardPage() {
                       ? item.total_amount / item.sale_count 
                       : 0
                     return (
-                      <tr
-                        key={item.product_id}
-                        onClick={() => handleProductClick(item.product_id, item.product_name)}
+                  <tr
+                    key={item.product_name}
+                    onClick={() => handleProductClick(item.product_name)}
                         className="hover:bg-pastel-pink/50 transition-all cursor-pointer border-l-4 border-transparent hover:border-primary-400"
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -382,7 +371,6 @@ export default function DashboardPage() {
       {/* Product Detail Modal */}
       {selectedProduct && (
         <ProductDetailModal
-          productId={selectedProduct.id}
           productName={selectedProduct.name}
           isOpen={isModalOpen}
           onClose={() => {

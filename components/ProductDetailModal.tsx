@@ -7,7 +7,6 @@ import { FiX, FiCalendar, FiPackage, FiDollarSign } from 'react-icons/fi'
 import CuteIllustration from './CuteIllustration'
 
 interface ProductDetailModalProps {
-  productId: string
   productName: string
   isOpen: boolean
   onClose: () => void
@@ -15,7 +14,6 @@ interface ProductDetailModalProps {
 }
 
 export default function ProductDetailModal({
-  productId,
   productName,
   isOpen,
   onClose,
@@ -27,28 +25,18 @@ export default function ProductDetailModal({
   const [totalQuantity, setTotalQuantity] = useState(0)
 
   useEffect(() => {
-    if (isOpen && productId) {
+    if (isOpen && productName) {
       fetchProductSales()
     }
-  }, [isOpen, productId, dateFilter])
+  }, [isOpen, productName, dateFilter])
 
   const fetchProductSales = async () => {
     try {
       setLoading(true)
       let query = supabase
         .from('sales')
-        .select(`
-          id,
-          product_id,
-          quantity,
-          total_amount,
-          sale_date,
-          created_at,
-          products (
-            name
-          )
-        `)
-        .eq('product_id', productId)
+        .select('id, M_Name, amount, quantity, sale_date, created_at')
+        .eq('M_Name', productName)
         .order('sale_date', { ascending: false })
 
       if (dateFilter) {
@@ -61,10 +49,9 @@ export default function ProductDetailModal({
 
       const formattedSales: SaleDetail[] = (data || []).map((sale: any) => ({
         id: sale.id,
-        product_id: sale.product_id,
-        product_name: sale.products?.name || productName,
-        quantity: sale.quantity,
-        total_amount: sale.total_amount,
+        product_name: sale.M_Name || productName,
+        quantity: sale.quantity ?? 1,
+        total_amount: Number(sale.amount) || 0,
         sale_date: sale.sale_date,
         created_at: sale.created_at,
       }))
