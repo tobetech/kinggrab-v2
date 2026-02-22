@@ -71,10 +71,12 @@ export default function ProductDetailModal({
   }
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('th-TH', {
-      style: 'currency',
-      currency: 'THB',
+    // แปลงเป็นตัวเลขและจัดรูปแบบ
+    const formatted = new Intl.NumberFormat('th-TH', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(amount)
+    return formatted + ' บาท'
   }
 
   const formatNumber = (num: number) => {

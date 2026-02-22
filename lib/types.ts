@@ -1,32 +1,16 @@
-export interface Product {
+export interface Transaction {
   id: string
-  name: string
-  description?: string
-  price: number
-  category?: string
-}
-
-export interface Sale {
-  id: string
+  Card_No?: string
+  tel_no?: string
   M_Name: string
+  action: string
   amount: number
-  quantity?: number
-  sale_date: string
-  created_at?: string
+  created_at: string
 }
 
-export interface SalesByProduct {
-  product_name: string
-  total_quantity: number
-  total_amount: number
-  sale_count: number
-}
-
-export interface SaleDetail {
-  id: string
-  product_name: string
-  quantity: number
-  total_amount: number
-  sale_date: string
-  created_at?: string
+export interface UserRole {
+  role: 'admin' | 'user'
+  allowed_actions?: string[] // สำหรับ user ที่จำกัด action
+  allowed_tel_nos?: string[] // สำหรับ user ที่จำกัด Tel_No
+  allowed_m_names?: string[] // สำหรับ user ที่จำกัด M_Name
 }

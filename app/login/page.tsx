@@ -3,14 +3,17 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi'
+import { FiLogIn, FiMail, FiLock, FiUserPlus } from 'react-icons/fi'
 import CuteIllustration from '@/components/CuteIllustration'
 
 export default function LoginPage() {
+  const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -27,6 +30,7 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setSuccess('')
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -45,6 +49,55 @@ export default function LoginPage() {
       setLoading(false)
     }
   }
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    setSuccess('')
+
+    // ตรวจสอบรหัสผ่าน
+    if (password !== confirmPassword) {
+      setError('รหัสผ่านไม่ตรงกัน')
+      setLoading(false)
+      return
+    }
+
+    if (password.length < 6) {
+      setError('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร')
+      setLoading(false)
+      return
+    }
+
+    try {
+      // สมัครสมาชิก
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      })
+
+      if (signUpError) throw signUpError
+
+      if (data.user) {
+        setSuccess('สมัครสมาชิกสำเร็จ!')
+
+        // รีเซ็ต form
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        // สลับไปหน้า login หลังจาก 2 วินาที
+        setTimeout(() => {
+          setIsSignUp(false)
+          setSuccess('')
+        }, 2000)
+      }
+    } catch (error: any) {
+      setError(error.message || 'เกิดข้อผิดพลาดในการสมัครสมาชิก')
+    } finally {
+      setLoading(false)
+    }
+  }
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose px-4 relative overflow-hidden">
@@ -67,14 +120,60 @@ export default function LoginPage() {
             </div>
             
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full mb-4 shadow-lg">
-              <FiLogIn className="w-10 h-10 text-primary-600" />
+              {isSignUp ? (
+                <FiUserPlus className="w-10 h-10 text-primary-600" />
+              ) : (
+                <FiLogIn className="w-10 h-10 text-primary-600" />
+              )}
             </div>
             <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent mb-2">
-              เข้าสู่ระบบ
+              {isSignUp ? 'สมัครสมาชิก' : 'เข้าสู่ระบบ'}
             </h1>
             <p className="text-gray-600">
-              กรุณาเข้าสู่ระบบเพื่อเข้าถึง Dashboard
+              {isSignUp 
+                ? 'สร้างบัญชีใหม่เพื่อเข้าถึง Dashboard' 
+                : 'กรุณาเข้าสู่ระบบเพื่อเข้าถึง Dashboard'}
             </p>
+          </div>
+
+          {/* Toggle between Login and Sign Up */}
+          <div className="mb-6 flex items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setIsSignUp(false)
+                setError('')
+                setSuccess('')
+                setEmail('')
+                setPassword('')
+                setConfirmPassword('')
+              }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                !isSignUp
+                  ? 'bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-md'
+                  : 'bg-pastel-pink/50 text-gray-700 hover:bg-pastel-rose'
+              }`}
+            >
+              เข้าสู่ระบบ
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setIsSignUp(true)
+                setError('')
+                setSuccess('')
+                setEmail('')
+                setPassword('')
+                setConfirmPassword('')
+              }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                isSignUp
+                  ? 'bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-md'
+                  : 'bg-pastel-pink/50 text-gray-700 hover:bg-pastel-rose'
+              }`}
+            >
+              สมัครสมาชิก
+            </button>
           </div>
 
           {error && (
@@ -83,7 +182,13 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-6">
+          {success && (
+            <div className="mb-6 p-4 bg-green-50 border-2 border-green-200 rounded-xl">
+              <p className="text-sm text-green-600">{success}</p>
+            </div>
+          )}
+
+          <form onSubmit={isSignUp ? handleSignUp : handleLogin} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 อีเมล
@@ -98,7 +203,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="block w-full pl-10 pr-3 py-3 border-2 border-pastel-pink rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-colors bg-white/50"
+                  className="block w-full pl-10 pr-3 py-3 border-2 border-pastel-pink rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-colors bg-white text-gray-900 placeholder-gray-400"
                   placeholder="your@email.com"
                 />
               </div>
@@ -118,11 +223,38 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="block w-full pl-10 pr-3 py-3 border-2 border-pastel-pink rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-colors bg-white/50"
+                  minLength={6}
+                  className="block w-full pl-10 pr-3 py-3 border-2 border-pastel-pink rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-colors bg-white text-gray-900 placeholder-gray-400"
                   placeholder="••••••••"
                 />
               </div>
+              {isSignUp && (
+                <p className="mt-1 text-xs text-gray-500">รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร</p>
+              )}
             </div>
+
+            {isSignUp && (
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                  ยืนยันรหัสผ่าน
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FiLock className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    className="block w-full pl-10 pr-3 py-3 border-2 border-pastel-pink rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition-colors bg-white text-gray-900 placeholder-gray-400"
+                    placeholder="••••••••"
+                  />
+                </div>
+              </div>
+            )}
 
             <button
               type="submit"
@@ -135,10 +267,10 @@ export default function LoginPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  กำลังเข้าสู่ระบบ...
+                  {isSignUp ? 'กำลังสมัครสมาชิก...' : 'กำลังเข้าสู่ระบบ...'}
                 </>
               ) : (
-                'เข้าสู่ระบบ'
+                isSignUp ? 'สมัครสมาชิก' : 'เข้าสู่ระบบ'
               )}
             </button>
           </form>

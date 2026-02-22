@@ -3,8 +3,8 @@
 สร้างไฟล์ `.env.local` ในโฟลเดอร์ root ของโปรเจกต์ และเพิ่มข้อมูลต่อไปนี้:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SUPABASE_URL=https://henhksozqbpacmptiaoh.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhlbmhrc296cWJwYWNtcHRpYW9oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2MzcxNDYsImV4cCI6MjA1NDIxMzE0Nn0.K5CUSZQsviKyvV6j3sGKhQ6TixieL82N0w0lRaM43kM
 ```
 
 ## วิธีหา Supabase URL และ Key
