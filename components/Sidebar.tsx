@@ -66,15 +66,22 @@ export default function Sidebar({
     },
   ]
 
-  const actionOptions = [
-    { value: 'Play', label: 'Play' },
-    { value: 'Topup', label: 'Topup' },
-    { value: 'Topup_M', label: 'Topup_M' },
-    { value: 'Refund', label: 'Refund' },
-    { value: 'Redeem', label: 'Redeem' },
-    { value: 'Addcard', label: 'Addcard' },
-    { value: 'Logout', label: 'Logout' },
-  ]
+  // สำหรับผู้ใช้ที่ไม่ใช่ admin ให้ลบ Play, Topup_M, Addcard และ Logout ออก
+  const actionOptions = adminData?.status === 'admin' 
+    ? [
+        { value: 'Play', label: 'Play' },
+        { value: 'Topup', label: 'Topup' },
+        { value: 'Topup_M', label: 'Topup_M' },
+        { value: 'Refund', label: 'Refund' },
+        { value: 'Redeem', label: 'Redeem' },
+        { value: 'Addcard', label: 'Addcard' },
+        { value: 'Logout', label: 'Logout' },
+      ]
+    : [
+        { value: 'Topup', label: 'Topup' },
+        { value: 'Refund', label: 'Refund' },
+        { value: 'Redeem', label: 'Redeem' },
+      ]
 
   const hasActiveFilters = telNoFilter || actionFilter || mNameFilter
 
@@ -263,32 +270,41 @@ export default function Sidebar({
 
           {/* Menu Items */}
           <div className="flex-1 overflow-y-auto p-4 space-y-2">
-            {menuItems.map((item) => {
-              const Icon = item.icon
-              const isActive = activeView === item.id
+            {menuItems
+              .filter((item) => {
+                // สำหรับผู้ใช้ที่ไม่ใช่ admin ให้แสดงเฉพาะ 'all' และ 'action'
+                if (adminData?.status !== 'admin') {
+                  return item.id === 'all' || item.id === 'action'
+                }
+                // สำหรับ admin แสดงทั้งหมด
+                return true
+              })
+              .map((item) => {
+                const Icon = item.icon
+                const isActive = activeView === item.id
 
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onViewChange(item.id)}
-                  className={`w-full text-left p-4 rounded-xl transition-all ${
-                    isActive
-                      ? 'bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-lg'
-                      : 'bg-pastel-pink/50 hover:bg-pastel-rose text-gray-700'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-primary-600'}`} />
-                    <div className="flex-1">
-                      <div className="font-medium">{item.label}</div>
-                      <div className={`text-xs mt-1 ${isActive ? 'text-pink-100' : 'text-gray-500'}`}>
-                        {item.description}
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => onViewChange(item.id)}
+                    className={`w-full text-left p-4 rounded-xl transition-all ${
+                      isActive
+                        ? 'bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-lg'
+                        : 'bg-pastel-pink/50 hover:bg-pastel-rose text-gray-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-primary-600'}`} />
+                      <div className="flex-1">
+                        <div className="font-medium">{item.label}</div>
+                        <div className={`text-xs mt-1 ${isActive ? 'text-pink-100' : 'text-gray-500'}`}>
+                          {item.description}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </button>
-              )
-            })}
+                  </button>
+                )
+              })}
           </div>
         </div>
       </aside>
