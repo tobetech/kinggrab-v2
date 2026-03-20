@@ -6,8 +6,19 @@ export interface Transaction {
   action: string
   amount: number
   created_at: string
+  Location?: string
+  staff?: string
+  refund?: number
 }
 
+export interface SaleDetail {
+  id: string
+  product_name: string
+  quantity: number
+  total_amount: number
+  sale_date: string
+  created_at: string
+}
 export interface UserRole {
   role: 'admin' | 'user'
   allowed_actions?: string[] // สำหรับ user ที่จำกัด action

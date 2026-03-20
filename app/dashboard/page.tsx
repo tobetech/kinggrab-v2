@@ -8,7 +8,7 @@ import { FiLogOut, FiCalendar, FiX, FiDownload, FiArrowUp, FiArrowDown } from 'r
 import CuteIllustration from '@/components/CuteIllustration'
 import Sidebar from '@/components/Sidebar'
 
-type ViewType = 'all' | 'telno' | 'action' | 'mname'
+type ViewType = 'all' | 'telno' | 'action' | 'mname' | 'location'
 
 export default function DashboardPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
@@ -21,6 +21,7 @@ export default function DashboardPage() {
   const [telNoFilter, setTelNoFilter] = useState<string>('')
   const [actionFilter, setActionFilter] = useState<string>('')
   const [mNameFilter, setMNameFilter] = useState<string>('')
+  const [locationFilter, setLocationFilter] = useState<string>('')
   const [userRole, setUserRole] = useState<UserRole>({ role: 'user' })
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc') // desc = ใหม่ไปเก่า (สูงไปต่ำ), asc = เก่าไปใหม่ (ต่ำไปสูง)
   const [userStatus, setUserStatus] = useState<string>('')
@@ -67,10 +68,44 @@ export default function DashboardPage() {
           console.log('New record:', payload.new)
           console.log('Old record:', payload.old)
           
-          // Refresh ข้อมูลเมื่อมีการเปลี่ยนแปลง
-          setTimeout(() => {
-            fetchTransactions()
-          }, 500) // รอ 500ms เพื่อให้ database commit เสร็จก่อน
+          // ตรวจสอบว่าข้อมูลใหม่อยู่ในช่วงวันที่ที่เลือกหรือไม่
+          if (payload.new && (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE')) {
+            const newRecord = payload.new as any
+            const recordDate = new Date(newRecord.created_at)
+            
+            // ตรวจสอบช่วงวันที่
+            let isInDateRange = true
+            if (startDate || endDate) {
+              if (startDate) {
+                const startDateTime = new Date(`${startDate}T00:00:00.000Z`)
+                if (recordDate < startDateTime) {
+                  isInDateRange = false
+                }
+              }
+              if (endDate) {
+                const endDateTime = new Date(`${endDate}T23:59:59.999Z`)
+                if (recordDate > endDateTime) {
+                  isInDateRange = false
+                }
+              }
+            }
+            
+            // ถ้าข้อมูลใหม่อยู่ในช่วงวันที่ที่เลือก ให้ refresh ข้อมูล
+            if (isInDateRange) {
+              console.log('New record is in selected date range, refreshing data...')
+              setTimeout(() => {
+                fetchTransactions()
+              }, 500) // รอ 500ms เพื่อให้ database commit เสร็จก่อน
+            } else {
+              console.log('New record is outside selected date range, skipping refresh')
+            }
+          } else if (payload.eventType === 'DELETE') {
+            // ถ้ามีการลบข้อมูล ให้ refresh เสมอ (เพราะอาจจะลบข้อมูลที่แสดงอยู่)
+            console.log('Record deleted, refreshing data...')
+            setTimeout(() => {
+              fetchTransactions()
+            }, 500)
+          }
         }
       )
       .subscribe((status) => {
@@ -92,12 +127,12 @@ export default function DashboardPage() {
       supabase.removeChannel(channel)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userRole.role])
+  }, [userRole.role, startDate, endDate])
 
   useEffect(() => {
     applyFilters()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactions, activeView, telNoFilter, actionFilter, mNameFilter, sortOrder])
+  }, [transactions, activeView, telNoFilter, actionFilter, mNameFilter, locationFilter, sortOrder])
 
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession()
@@ -178,7 +213,7 @@ export default function DashboardPage() {
 
       let query = supabase
         .from('smartcard')
-        .select('id, Card_No, tel_no, M_Name, action, amount, created_at')
+        .select('id, Card_No, tel_no, M_Name, action, amount, created_at, Location, staff, refund')
 
       // กรองตามช่วงวันที่
       if (startDate) {
@@ -241,6 +276,9 @@ export default function DashboardPage() {
         action: item.action || '',
         amount: item.amount || 0,
         created_at: item.created_at || '',
+        Location: item.Location || '',
+        staff: item.staff || '',
+        refund: item.refund !== null && item.refund !== undefined ? item.refund : 0,
       }))
 
       setTransactions(formattedData)
@@ -257,7 +295,7 @@ export default function DashboardPage() {
 
     console.log('Applying filters. Total transactions:', transactions.length)
     console.log('Active view:', activeView)
-    console.log('Filters - telNo:', telNoFilter, 'action:', actionFilter, 'mName:', mNameFilter)
+    console.log('Filters - telNo:', telNoFilter, 'action:', actionFilter, 'mName:', mNameFilter, 'location:', locationFilter)
 
     // กรองตาม activeView
     switch (activeView) {
@@ -294,6 +332,22 @@ export default function DashboardPage() {
         } else {
           // ถ้ายังไม่กรอง M_Name ให้แสดงทั้งหมด
           filtered = transactions
+        }
+        break
+
+      case 'location':
+        // กรองตาม Location (บังคับ)
+        if (locationFilter) {
+          filtered = filtered.filter(t => 
+            t.Location?.toLowerCase().includes(locationFilter.toLowerCase())
+          )
+        } else {
+          // ถ้ายังไม่กรอง Location ให้แสดงทั้งหมด
+          filtered = transactions
+        }
+        // กรองตาม action (เพิ่มเติม - ถ้ามี)
+        if (actionFilter) {
+          filtered = filtered.filter(t => t.action === actionFilter)
         }
         break
 
@@ -382,6 +436,7 @@ export default function DashboardPage() {
     setTelNoFilter('')
     setActionFilter('')
     setMNameFilter('')
+    setLocationFilter('')
   }
 
   const handleViewChange = (view: string) => {
@@ -421,6 +476,8 @@ export default function DashboardPage() {
           onActionFilterChange={setActionFilter}
           mNameFilter={mNameFilter}
           onMNameFilterChange={setMNameFilter}
+          locationFilter={locationFilter}
+          onLocationFilterChange={setLocationFilter}
           onClearFilters={clearAllFilters}
           userEmail={userEmail}
           adminData={adminData}
@@ -438,7 +495,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
-                    Transaction Dashboard
+                    King Grab Dashboard
                   </h1>
                   {userStatus && (
                     <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 border border-blue-300">
@@ -626,8 +683,11 @@ export default function DashboardPage() {
                           <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">M Name</th>
                         </>
                       )}
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Staff</th>
                       <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
                       <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Amount</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Refund</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -649,12 +709,19 @@ export default function DashboardPage() {
                             </td>
                           </>
                         )}
+                        <td className="px-4 py-3 text-sm text-gray-900">
+                          {transaction.Location || '-'}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-900">
+                          {transaction.staff || '-'}
+                        </td>
                         <td className="px-4 py-3 text-sm">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                             transaction.action === 'Play' ? 'bg-blue-100 text-blue-700' :
                             transaction.action === 'Topup' ? 'bg-purple-100 text-purple-700' :
                             transaction.action === 'Topup_M' ? 'bg-indigo-100 text-indigo-700' :
                             transaction.action === 'Refund' ? 'bg-red-100 text-red-700' :
+                            transaction.action === 'Refund_C' ? 'bg-pink-100 text-pink-700' :
                             transaction.action === 'Redeem' ? 'bg-green-100 text-green-700' :
                             transaction.action === 'Addcard' ? 'bg-yellow-100 text-yellow-700' :
                             transaction.action === 'Logout' ? 'bg-orange-100 text-orange-700' :
@@ -666,16 +733,22 @@ export default function DashboardPage() {
                         <td className="px-4 py-3 text-sm text-right font-semibold text-gray-900">
                           {formatCurrency(transaction.amount)}
                         </td>
+                        <td className="px-4 py-3 text-sm text-right font-semibold text-gray-900">
+                          {formatCurrency(transaction.refund || 0)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot className="bg-gradient-to-r from-pastel-pink/50 to-pastel-rose/50">
                     <tr>
-                      <td colSpan={adminData?.status === 'admin' ? 5 : 2} className="px-4 py-3 text-sm font-bold text-gray-900">
+                      <td colSpan={adminData?.status === 'admin' ? 7 : 4} className="px-4 py-3 text-sm font-bold text-gray-900">
                         รวมทั้งหมด
                       </td>
                       <td className="px-4 py-3 text-sm text-right font-bold text-gray-900">
                         {formatCurrency(totalAmount)}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-right font-bold text-gray-900">
+                        {formatCurrency(filteredTransactions.reduce((sum, t) => sum + (t.refund || 0), 0))}
                       </td>
                     </tr>
                   </tfoot>

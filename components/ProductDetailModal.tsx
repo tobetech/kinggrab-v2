@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { SaleDetail } from '@/lib/types'
+import { SaleDetail} from '@/lib/types'
 import { FiX, FiCalendar, FiPackage, FiDollarSign } from 'react-icons/fi'
 import CuteIllustration from './CuteIllustration'
 
@@ -113,12 +113,12 @@ export default function ProductDetailModal({
             </div>
             <div>
               <h3 className="text-lg font-semibold text-white">รายละเอียดยอดขาย</h3>
-              <p className="text-sm text-pink-100 mt-1">{productName}</p>
+              <p className="text-sm text-pink-600 mt-1">{productName}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-white hover:text-pink-100 transition-colors p-2 hover:bg-white/20 rounded-lg"
+            className="text-white hover:text-pink-600 transition-colors p-2 hover:bg-white/20 rounded-lg"
           >
             <FiX className="w-6 h-6" />
           </button>
