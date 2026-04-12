@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview — สมาชิก LINE (LIFF)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4',
+              400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d',
+              800: '#9f1239', 900: '#831843',
+            },
+            pastel: {
+              pink: '#ffd6e8', rose: '#ffe4ec', blush: '#fff0f5',
+              lavender: '#f5e6ff', peach: '#ffe5d9',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .phone-frame {
+      width: 360px;
+      max-width: 100%;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(190, 24, 93, 0.25), 0 0 0 1px rgba(255, 214, 232, 0.8);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-pastel-pink/50 via-white to-pastel-blush/60 min-h-screen">
+  <div class="container mx-auto px-4 py-10">
+    <h1 class="text-center text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+      ตัวอย่างหน้าจอ — ระบบสมาชิก LINE
+    </h1>
+    <p class="mt-2 text-center text-sm text-gray-600 max-w-xl mx-auto">
+      ไฟล์สาธิตเท่านั้น (เปิดในเบราว์เซอร์) ดีไซน์ตรงกับ <code class="text-primary-700">/line/bind</code>,
+      <code class="text-primary-700">/line/home</code>, <code class="text-primary-700">/line/rewards</code>
+    </p>
+
+    <div class="mt-10 flex flex-col lg:flex-row flex-wrap justify-center gap-10 lg:gap-8 items-start">
+      <!-- 1: Bind -->
+      <div class="flex flex-col items-center">
+        <h2 class="mb-3 text-sm font-semibold text-gray-700">① เชื่อมบัญชี</h2>
+        <div class="phone-frame bg-gradient-to-br from-pastel-pink/40 via-pastel-blush/30 to-pastel-rose/40">
+          <div class="min-h-[640px] px-4 py-8">
+            <h3 class="text-xl font-bold text-primary-700">เชื่อมบัญชีสมาชิก</h3>
+            <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+              กรอกเบอร์โทรที่ใช้ในระบบร้าน (ต้องตรงกับคอลัมน์ <span class="font-mono text-xs">tel_no</span> ใน smartcard)
+            </p>
+            <div class="mt-8 space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700">เบอร์โทรศัพท์</label>
+                <input type="text" readonly value="081-234-5678"
+                  class="mt-1 w-full rounded-xl border-2 border-pastel-pink bg-white px-3 py-3 text-gray-900 shadow-sm" />
+              </div>
+              <button type="button" class="w-full rounded-xl bg-gradient-to-r from-primary-500 to-primary-400 py-3 font-medium text-white shadow-md">
+                <!-- eslint-disable --> ยืนยัน
+              </button>
+            </div>
+            <p class="mt-8 text-center text-xs text-gray-500">
+              ต้องการความปลอดภัยสูงขึ้น แนะนำเพิ่ม OTP ยืนยันเบอร์ในอนาคต
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2: Home -->
+      <div class="flex flex-col items-center">
+        <h2 class="mb-3 text-sm font-semibold text-gray-700">② หน้าหลัก (ยอดเงิน · คะแนน)</h2>
+        <div class="phone-frame bg-gradient-to-br from-pastel-pink/40 via-pastel-blush/30 to-pastel-rose/40">
+          <div class="min-h-[640px] px-4 pb-24 pt-8">
+            <header class="mb-6 flex items-start justify-between gap-2">
+              <div>
+                <p class="text-sm text-gray-500">สวัสดี</p>
+                <h3 class="text-xl font-bold text-primary-800">King Grab สมาชิก</h3>
+                <p class="text-sm text-gray-600">รหัส: M001</p>
+                <p class="text-xs text-gray-500">เบอร์ 081-234-5678</p>
+              </div>
+              <span class="shrink-0 rounded-lg border border-pastel-pink bg-white/80 px-2 py-1 text-xs font-medium text-primary-700">รีเฟรช</span>
+            </header>
+            <div class="space-y-4">
+              <section class="rounded-2xl border-2 border-white/80 bg-white/90 p-5 shadow-lg backdrop-blur">
+                <p class="text-sm font-medium text-gray-500">ยอดเงินคงเหลือ (จากรายการ smartcard)</p>
+                <p class="mt-1 text-3xl font-bold text-gray-900">12,345.50 บาท</p>
+                <p class="mt-2 text-xs text-gray-500">ผลรวม amount ทุกรายการที่ tel_no ตรงกัน</p>
+              </section>
+              <section class="rounded-2xl border-2 border-white/80 bg-white/90 p-5 shadow-lg backdrop-blur">
+                <p class="text-sm font-medium text-gray-500">คะแนนสะสม</p>
+                <div class="mt-2 flex flex-wrap gap-4">
+                  <div>
+                    <p class="text-xs text-gray-500">ได้รับรวม</p>
+                    <p class="text-xl font-semibold text-primary-700">420 pt</p>
+                  </div>
+                  <div>
+                    <p class="text-xs text-gray-500">แลกไปแล้ว</p>
+                    <p class="text-xl font-semibold text-gray-700">120 pt</p>
+                  </div>
+                  <div>
+                    <p class="text-xs text-gray-500">คงเหลือแลกได้</p>
+                    <p class="text-2xl font-bold text-rose-600">300 pt</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-xs text-gray-500">ทุก 10 บาทจาก Topup / Topup_M / Addcard = 1 คะแนน</p>
+              </section>
+            </div>
+            <div class="mt-8 grid grid-cols-1 gap-3">
+              <div class="rounded-xl bg-gradient-to-r from-primary-500 to-primary-400 py-4 text-center font-medium text-white shadow-md">แลกของรางวัล</div>
+              <div class="rounded-xl border-2 border-pastel-pink bg-white py-3 text-center text-sm font-medium text-gray-700">กลับเว็บหลัก</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3: Rewards -->
+      <div class="flex flex-col items-center">
+        <h2 class="mb-3 text-sm font-semibold text-gray-700">③ แลกของ (มีรูปสินค้า)</h2>
+        <div class="phone-frame bg-gradient-to-br from-pastel-pink/40 via-pastel-blush/30 to-pastel-rose/40">
+          <div class="min-h-[640px] px-4 pb-10 pt-6">
+            <div class="mb-4 flex items-center justify-between">
+              <span class="text-sm font-medium text-primary-700">← กลับ</span>
+              <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-rose-600 shadow">เหลือ 300 คะแนน</span>
+            </div>
+            <h3 class="text-lg font-bold text-primary-800">ของรางวัลแลกคะแนน</h3>
+            <p class="mt-1 text-sm text-gray-600">แตะแลกเมื่อคะแนนพอ — รับของที่สาขา</p>
+
+            <ul class="mt-5 space-y-4">
+              <li class="overflow-hidden rounded-2xl border-2 border-white/80 bg-white/95 shadow-lg">
+                <div class="aspect-[16/10] w-full bg-gray-100">
+                  <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" alt="" class="h-full w-full object-cover" />
+                </div>
+                <div class="p-4">
+                  <h4 class="text-base font-semibold text-gray-900">กาแฟร้อน 1 แก้ว</h4>
+                  <p class="mt-1 text-sm text-gray-600">แลกที่เคาน์เตอร์ภายใน 7 วัน</p>
+                  <div class="mt-3 flex items-center justify-between">
+                    <span class="text-sm font-medium text-primary-700">150 คะแนน</span>
+                    <button type="button" class="rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white">แลก</button>
+                  </div>
+                </div>
+              </li>
+              <li class="overflow-hidden rounded-2xl border-2 border-white/80 bg-white/95 shadow-lg">
+                <div class="aspect-[16/10] w-full bg-gray-100">
+                  <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80" alt="" class="h-full w-full object-cover" />
+                </div>
+                <div class="p-4">
+                  <h4 class="text-base font-semibold text-gray-900">เค้กชิ้นเล็ก</h4>
+                  <p class="mt-1 text-sm text-gray-600">รสชาติตามรอบเดือน</p>
+                  <div class="mt-3 flex items-center justify-between">
+                    <span class="text-sm font-medium text-primary-700">300 คะแนน</span>
+                    <button type="button" class="rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white">แลก</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-12 text-center text-xs text-gray-500">
+      เปิดไฟล์นี้จากโฟลเดอร์โปรเจกต์ หรือรันเซิร์ฟเวอร์แล้วใช้งาน LIFF จริงที่ <code>/line</code>
+    </p>
+  </div>
+</body>
+</html>

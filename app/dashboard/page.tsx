@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Transaction, UserRole } from '@/lib/types'
-import { FiLogOut, FiCalendar, FiX, FiDownload, FiArrowUp, FiArrowDown } from 'react-icons/fi'
+import { FiLogOut, FiCalendar, FiX, FiDownload, FiArrowUp, FiArrowDown, FiMenu } from 'react-icons/fi'
 import CuteIllustration from '@/components/CuteIllustration'
 import Sidebar from '@/components/Sidebar'
 
@@ -27,6 +27,7 @@ export default function DashboardPage() {
   const [userStatus, setUserStatus] = useState<string>('')
   const [userEmail, setUserEmail] = useState<string>('')
   const [adminData, setAdminData] = useState<any>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -441,8 +442,8 @@ export default function DashboardPage() {
 
   const handleViewChange = (view: string) => {
     setActiveView(view as ViewType)
-    // Clear filters when changing view
     clearAllFilters()
+    setSidebarOpen(false)
   }
 
   const handleLogout = async () => {
@@ -452,7 +453,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose">
+      <div className="min-h-[100dvh] min-h-screen flex items-center justify-center bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose px-4">
         <div className="text-center">
           <div className="w-32 h-32 mx-auto mb-4">
             <CuteIllustration type="dashboard" />
@@ -465,9 +466,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose flex">
-      {/* Sidebar */}
-        <Sidebar
+    <div className="flex min-h-[100dvh] min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-gradient-to-br from-pastel-pink via-pastel-blush to-pastel-rose">
+      <Sidebar
+          open={sidebarOpen}
+          onOpenChange={setSidebarOpen}
           activeView={activeView}
           onViewChange={handleViewChange}
           telNoFilter={telNoFilter}
@@ -483,39 +485,46 @@ export default function DashboardPage() {
           adminData={adminData}
         />
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:ml-0">
-        {/* Header */}
-        <header className="bg-white/80 backdrop-blur-sm shadow-lg border-b-2 border-pastel-pink">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12">
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="shrink-0 bg-white/80 backdrop-blur-sm shadow-lg border-b-2 border-pastel-pink">
+          <div className="px-3 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center gap-2 py-3 sm:py-4">
+              <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() => setSidebarOpen(true)}
+                  className="shrink-0 rounded-xl p-2 text-primary-700 hover:bg-pastel-pink/80 lg:hidden"
+                  aria-label="เปิดเมนูตัวกรอง"
+                >
+                  <FiMenu className="h-6 w-6" />
+                </button>
+                <div className="h-10 w-10 shrink-0 sm:h-12 sm:w-12" aria-hidden>
                   <CuteIllustration type="dashboard" />
                 </div>
-                <div className="flex items-center gap-3">
-                  <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+                <div className="min-w-0 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
+                  <h1 className="truncate text-lg font-bold sm:text-2xl bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                     King Grab Dashboard
                   </h1>
                   {userStatus && (
-                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 border border-blue-300">
+                    <span className="w-fit shrink-0 rounded-full border border-blue-300 bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 sm:px-3 sm:py-1">
                       {userStatus}
                     </span>
                   )}
                 </div>
               </div>
               <button
+                type="button"
                 onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-primary-600 hover:bg-pastel-pink rounded-xl transition-all border-2 border-transparent hover:border-primary-300"
+                className="flex shrink-0 items-center gap-1 rounded-xl border-2 border-transparent px-2 py-2 text-gray-700 hover:border-primary-300 hover:bg-pastel-pink hover:text-primary-600 sm:gap-2 sm:px-4"
               >
-                <FiLogOut className="w-5 h-5" />
+                <FiLogOut className="h-5 w-5 shrink-0" />
                 <span className="hidden sm:inline">ออกจากระบบ</span>
               </button>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-3 py-6 sm:px-6 sm:py-8 lg:px-8">
           {/* Summary Card */}
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 border-2 border-pastel-pink mb-8">
             <div className="flex items-center justify-between">

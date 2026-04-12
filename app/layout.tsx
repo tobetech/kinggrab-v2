@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   description: 'Dashboard สำหรับแสดงยอดขายสินค้า',
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#fdf2f8',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -16,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="th">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} min-h-[100dvh] min-h-screen overflow-x-hidden antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }

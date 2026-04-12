@@ -1,17 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { 
-  FiHome, 
-  FiPhone, 
-  FiTag, 
+import {
+  FiHome,
+  FiPhone,
+  FiTag,
   FiServer,
   FiMapPin,
   FiFilter,
-  FiX
+  FiX,
 } from 'react-icons/fi'
 
 interface SidebarProps {
+  /** เปิด/ปิดแผงด้านข้างบนมือถือ — บน lg แถบยังแสดงเมื่อปิดอยู่ (translate) */
+  open: boolean
+  onOpenChange: (open: boolean) => void
   activeView: string
   onViewChange: (view: string) => void
   telNoFilter: string
@@ -28,6 +30,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({
+  open: isOpen,
+  onOpenChange,
   activeView,
   onViewChange,
   telNoFilter,
@@ -42,8 +46,6 @@ export default function Sidebar({
   userEmail,
   adminData,
 }: SidebarProps) {
-  const [isOpen, setIsOpen] = useState(true)
-
   const menuItems = [
     {
       id: 'all',
@@ -103,7 +105,7 @@ export default function Sidebar({
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setIsOpen(false)}
+          onClick={() => onOpenChange(false)}
         />
       )}
 
@@ -124,7 +126,7 @@ export default function Sidebar({
                 </h2>
               </div>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => onOpenChange(false)}
                 className="lg:hidden p-2 hover:bg-pastel-pink rounded-lg transition-colors"
               >
                 <FiX className="w-5 h-5 text-gray-600" />
@@ -353,8 +355,13 @@ export default function Sidebar({
 
       {/* Mobile toggle button */}
       <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 left-4 z-40 lg:hidden p-3 bg-primary-600 text-white rounded-full shadow-lg hover:bg-primary-700 transition-colors"
+        type="button"
+        onClick={() => onOpenChange(true)}
+        className="fixed z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-white shadow-lg transition-colors hover:bg-primary-700 lg:hidden"
+        style={{
+          left: 'max(1rem, env(safe-area-inset-left, 0px))',
+          bottom: 'max(1rem, env(safe-area-inset-bottom, 0px))',
+        }}
       >
         <FiFilter className="w-6 h-6" />
       </button>
